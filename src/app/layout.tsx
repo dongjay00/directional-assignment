@@ -30,11 +30,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StyledComponentsRegistry>
-          <AntdRegistry>
+        <AntdRegistry>
+          <StyledComponentsRegistry>
             <Providers>{children}</Providers>
-          </AntdRegistry>
-        </StyledComponentsRegistry>
+          </StyledComponentsRegistry>
+        </AntdRegistry>
       </body>
     </html>
   );
