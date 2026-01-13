@@ -287,7 +287,9 @@ export default function PostsBoard() {
         </div>
         <Space>
           <Button onClick={handleSeedPosts} loading={isSeeding}>
-            더미데이터 30개 생성
+            {isSeeding
+              ? "생성중입니다. 잠시만 기다려주세요."
+              : "더미 게시글 생성"}
           </Button>
           <Button
             type="primary"
