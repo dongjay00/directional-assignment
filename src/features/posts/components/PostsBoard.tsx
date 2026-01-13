@@ -7,16 +7,20 @@ import {
   Card,
   Dropdown,
   Input,
+  message,
+  Popconfirm,
   Select,
   Space,
   Table,
   Tag,
   Typography,
 } from "antd";
+import { useQueryClient } from "@tanstack/react-query";
 import type { ColumnsType } from "antd/es/table";
 import { useMemo, useRef, useState } from "react";
 import { Resizable } from "react-resizable";
 import styled from "styled-components";
+import { createPost } from "@/apis/posts/api";
 import type { Post } from "@/apis/posts/types";
 import PostFormModal from "@/features/posts/components/PostFormModal";
 import {
@@ -26,6 +30,9 @@ import {
   useInfinitePosts,
   useUpdatePostMutation,
 } from "@/features/posts/queries";
+import { createDummyPosts } from "@/features/posts/seedPosts";
+import { useAuthStore } from "@/features/auth/store";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { POST_CATEGORIES } from "@/lib/constants";
 
@@ -52,9 +59,9 @@ const ResizableTitle = (
     width?: number;
     onResize?: (
       e: React.SyntheticEvent,
-      data: { size: { width: number } },
+      data: { size: { width: number } }
     ) => void;
-  },
+  }
 ) => {
   const { onResize, width, ...restProps } = props;
   if (!width || !onResize) {
@@ -74,7 +81,8 @@ const ResizableTitle = (
 };
 
 export default function PostsBoard() {
-  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const search = useDebounce(searchInput.trim(), 300);
   const [sort, setSort] = useState<"createdAt" | "title">("createdAt");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [category, setCategory] = useState<string>("all");
@@ -85,7 +93,7 @@ export default function PostsBoard() {
       tags: true,
       createdAt: true,
       actions: true,
-    },
+    }
   );
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
     title: 280,
@@ -96,6 +104,9 @@ export default function PostsBoard() {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [isSeeding, setIsSeeding] = useState(false);
+  const token = useAuthStore((state) => state.token);
+  const queryClient = useQueryClient();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfinitePosts({
@@ -108,13 +119,35 @@ export default function PostsBoard() {
 
   const posts = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
-    [data],
+    [data]
   );
 
   const createMutation = useCreatePostMutation();
   const updateMutation = useUpdatePostMutation();
   const deleteMutation = useDeletePostMutation();
   const deleteAllMutation = useDeleteAllPostsMutation();
+
+  const handleSeedPosts = async () => {
+    if (isSeeding) return;
+    if (!token) {
+      message.error("로그인이 필요합니다.");
+      return;
+    }
+    setIsSeeding(true);
+    try {
+      const posts = createDummyPosts(30);
+      for (const post of posts) {
+        await createPost(token, post);
+      }
+      await queryClient.invalidateQueries({ queryKey: ["posts"] });
+      message.success("더미 게시글 30건을 생성했습니다.");
+    } catch (error) {
+      console.error(error);
+      message.error("더미 게시글 생성에 실패했습니다.");
+    } finally {
+      setIsSeeding(false);
+    }
+  };
 
   const handleResize =
     (key: string) =>
@@ -187,13 +220,17 @@ export default function PostsBoard() {
             >
               수정
             </Button>
-            <Button
-              size="small"
-              danger
-              onClick={() => deleteMutation.mutateAsync(record.id)}
+            <Popconfirm
+              title="게시글을 삭제할까요?"
+              okText="삭제"
+              cancelText="취소"
+              okButtonProps={{ danger: true }}
+              onConfirm={() => deleteMutation.mutateAsync(record.id)}
             >
-              삭제
-            </Button>
+              <Button size="small" danger>
+                삭제
+              </Button>
+            </Popconfirm>
           </Space>
         ),
       },
@@ -205,7 +242,7 @@ export default function PostsBoard() {
       columnWidths.tags,
       columnWidths.title,
       deleteMutation,
-    ],
+    ]
   );
 
   const mergedColumns = columns
@@ -231,6 +268,7 @@ export default function PostsBoard() {
   }));
 
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+
   useInfiniteScroll({
     enabled: Boolean(hasNextPage) && !isFetchingNextPage,
     target: sentinelRef,
@@ -247,6 +285,9 @@ export default function PostsBoard() {
           </Typography.Text>
         </div>
         <Space>
+          <Button onClick={handleSeedPosts} loading={isSeeding}>
+            더미데이터 30개 생성
+          </Button>
           <Button
             type="primary"
             onClick={() => {
@@ -256,9 +297,16 @@ export default function PostsBoard() {
           >
             게시글 작성
           </Button>
-          <Button onClick={() => deleteAllMutation.mutateAsync()}>
-            전체 삭제
-          </Button>
+          <Popconfirm
+            title="모든 게시글을 삭제할까요?"
+            description="이 작업은 되돌릴 수 없습니다."
+            okText="삭제"
+            cancelText="취소"
+            okButtonProps={{ danger: true }}
+            onConfirm={() => deleteAllMutation.mutateAsync()}
+          >
+            <Button danger>전체 삭제</Button>
+          </Popconfirm>
         </Space>
       </HeaderRow>
 
@@ -266,8 +314,8 @@ export default function PostsBoard() {
         <Controls size="middle">
           <Input
             placeholder="제목/본문 검색"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            value={searchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
             style={{ width: 220 }}
           />
           <Select

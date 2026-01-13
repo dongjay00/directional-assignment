@@ -8,8 +8,11 @@ export type PostValidationError = {
 
 export const validatePost = (payload: PostInput): PostValidationError[] => {
   const errors: PostValidationError[] = [];
-  const forbidden = FORBIDDEN_WORDS.find((word) =>
-    [payload.title, payload.body].some((text) => text.includes(word)),
+  const titleForbidden = FORBIDDEN_WORDS.find((word) =>
+    payload.title.includes(word),
+  );
+  const bodyForbidden = FORBIDDEN_WORDS.find((word) =>
+    payload.body.includes(word),
   );
 
   if (payload.title.trim().length === 0) {
@@ -36,10 +39,17 @@ export const validatePost = (payload: PostInput): PostValidationError[] => {
     });
   }
 
-  if (forbidden) {
+  if (titleForbidden) {
     errors.push({
-      field: "form",
-      message: `금칙어가 포함되어 있습니다: ${forbidden}.`,
+      field: "title",
+      message: `금칙어가 포함되어 있습니다: ${titleForbidden}.`,
+    });
+  }
+
+  if (bodyForbidden) {
+    errors.push({
+      field: "body",
+      message: `금칙어가 포함되어 있습니다: ${bodyForbidden}.`,
     });
   }
 
