@@ -32,7 +32,7 @@ export default function LoginPanel() {
       <Card>
         <Typography.Title level={4}>로그인</Typography.Title>
         <Typography.Paragraph type="secondary">
-          제공된 계정으로 인증한 뒤 게시판과 차트를 확인하세요.
+          제공된 계정으로 인증해주세요.
         </Typography.Paragraph>
         {error ? (
           <Alert
