@@ -7,14 +7,12 @@ import {
   fetchWeeklyMood,
   fetchWeeklyWorkout,
 } from "@/apis/charts/api";
-import type {
-  MultiLineDataset,
-  PieBarDatum,
-  WeeklyStackDatum,
-} from "@/apis/charts/types";
+import type { PieBarDatum } from "@/components/ui/charts/PieBarChart/types";
+import type { WeeklyStackDatum } from "@/components/ui/charts/StackedChart/types";
+import type { MultiLineDataset } from "@/components/ui/charts/MultiLineChart/types";
 
 const toPieBar = (
-  items: Array<{ label: string; value: number }>,
+  items: Array<{ label: string; value: number }>
 ): PieBarDatum[] =>
   items.map((item) => ({
     id: item.label,
@@ -23,9 +21,9 @@ const toPieBar = (
   }));
 
 const toPercentStack = <
-  T extends Record<string, number | string> & { week: string },
+  T extends Record<string, number | string> & { week: string }
 >(
-  data: T[],
+  data: T[]
 ): WeeklyStackDatum[] =>
   data.map((entry) => {
     const keys = Object.keys(entry).filter((key) => key !== "week");
@@ -81,7 +79,7 @@ export const useCoffeeBrandCharts = () =>
         data.map((item) => ({
           label: item.brand,
           value: item.popularity,
-        })),
+        }))
       ),
   });
 

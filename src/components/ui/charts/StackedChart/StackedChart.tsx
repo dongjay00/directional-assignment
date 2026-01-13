@@ -13,8 +13,8 @@ import {
   YAxis,
 } from "recharts";
 import type { ValueType } from "recharts/types/component/DefaultTooltipContent";
-import type { WeeklyStackDatum } from "@/apis/charts/types";
-import LegendControls from "@/features/charts/components/LegendControls";
+import type { WeeklyStackDatum } from "./types";
+import LegendControls from "@/components/ui/charts/LegendControls";
 
 const PALETTE = ["#0ea5e9", "#f97316", "#22c55e", "#a855f7"];
 
@@ -49,7 +49,7 @@ export default function StackedChart({
         color: PALETTE[index % PALETTE.length],
         hidden: false,
       })),
-    [keys, labels],
+    [keys, labels]
   );
 
   const [legend, setLegend] = useState(initialLegend);
@@ -60,14 +60,14 @@ export default function StackedChart({
   const handleToggle = (id: string) => {
     setLegend((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item,
-      ),
+        item.id === id ? { ...item, hidden: !item.hidden } : item
+      )
     );
   };
 
   const handleColor = (id: string, color: string) => {
     setLegend((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, color } : item)),
+      prev.map((item) => (item.id === id ? { ...item, color } : item))
     );
   };
 

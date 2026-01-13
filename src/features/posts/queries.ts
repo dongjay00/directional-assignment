@@ -11,8 +11,13 @@ import {
   fetchPosts,
   updatePost,
 } from "@/apis/posts/api";
-import type { PostInput } from "@/apis/posts/types";
-import { mapPostsPage } from "@/apis/posts/types";
+import type {
+  PostInput,
+  PostDto,
+  Post,
+  PostsResponseDto,
+  PostsPage,
+} from "@/apis/posts/types";
 import { useAuthStore } from "@/features/auth/store";
 
 const postsKeys = {
@@ -20,6 +25,22 @@ const postsKeys = {
   list: (token: string | null, params: PostsQueryParams) =>
     ["posts", "list", token, params] as const,
 };
+
+const mapPost = (post: PostDto): Post => ({
+  id: post.id,
+  title: post.title,
+  body: post.body,
+  category: post.category,
+  tags: post.tags,
+  createdAt: new Date(post.createdAt),
+  authorId: post.userId,
+});
+
+const mapPostsPage = (page: PostsResponseDto): PostsPage => ({
+  items: page.items.map(mapPost),
+  nextCursor: page.nextCursor ?? null,
+  prevCursor: page.prevCursor ?? null,
+});
 
 export const useInfinitePosts = (params: PostsQueryParams) => {
   const token = useAuthStore((state) => state.token);

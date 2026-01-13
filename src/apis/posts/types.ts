@@ -2,7 +2,7 @@ import type { POST_CATEGORIES } from "@/lib/constants";
 
 export type PostCategory = (typeof POST_CATEGORIES)[number];
 
-type PostDto = {
+export type PostDto = {
   id: string;
   userId: string;
   title: string;
@@ -33,22 +33,6 @@ export type PostsPage = {
   nextCursor?: string | null;
   prevCursor?: string | null;
 };
-
-export const mapPost = (post: PostDto): Post => ({
-  id: post.id,
-  title: post.title,
-  body: post.body,
-  category: post.category,
-  tags: post.tags,
-  createdAt: new Date(post.createdAt),
-  authorId: post.userId,
-});
-
-export const mapPostsPage = (page: PostsResponseDto): PostsPage => ({
-  items: page.items.map(mapPost),
-  nextCursor: page.nextCursor ?? null,
-  prevCursor: page.prevCursor ?? null,
-});
 
 export type PostInput = {
   title: string;

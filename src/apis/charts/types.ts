@@ -29,28 +29,3 @@ export type SnackImpactDto = {
     metrics: Array<{ snacks: number; meetingsMissed: number; morale: number }>;
   }>;
 };
-
-export type PieBarDatum = {
-  id: string;
-  label: string;
-  value: number;
-};
-
-export type WeeklyStackDatum = {
-  week: string;
-  [key: string]: string | number;
-};
-
-export type MultiLineTeam = {
-  name: string;
-  leftKey: string;
-  rightKey: string;
-};
-
-export type MultiLineDataset = {
-  xKey: string;
-  leftLabel: string;
-  rightLabel: string;
-  data: Array<Record<string, number | string>>;
-  teams: MultiLineTeam[];
-};

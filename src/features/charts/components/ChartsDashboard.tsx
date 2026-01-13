@@ -1,10 +1,10 @@
 "use client";
 
 import { Col, Row, Typography } from "antd";
-import ChartCard from "@/features/charts/components/ChartCard";
-import MultiLineChart from "@/features/charts/components/MultiLineChart";
-import PieBarChart from "@/features/charts/components/PieBarChart";
-import StackedChart from "@/features/charts/components/StackedChart";
+import ChartCard from "@/components/ui/charts/ChartCard";
+import MultiLineChart from "@/components/ui/charts/MultiLineChart/MultiLineChart";
+import PieBarChart from "@/components/ui/charts/PieBarChart/PieBarChart";
+import StackedChart from "@/components/ui/charts/StackedChart/StackedChart";
 import {
   useCoffeeBrandCharts,
   useCoffeeConsumptionChart,
@@ -25,9 +25,9 @@ export default function ChartsDashboard() {
   return (
     <div style={{ display: "grid", gap: 24 }}>
       <div>
-        <Typography.Title level={3}>데이터 시각화</Typography.Title>
+        <Typography.Title level={3}>차트</Typography.Title>
         <Typography.Text type="secondary">
-          React Query에서 포매팅된 데이터를 기준으로 차트를 구성했습니다.
+          과제의 요구조건에 맞춘 차트 페이지입니다.
         </Typography.Text>
       </div>
 

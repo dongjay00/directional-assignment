@@ -10,8 +10,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { MultiLineDataset } from "@/apis/charts/types";
-import LegendControls from "@/features/charts/components/LegendControls";
+import type { MultiLineDataset } from "./types";
+import LegendControls from "@/components/ui/charts/LegendControls";
 
 const PALETTE = ["#0f766e", "#7c3aed", "#d97706", "#2563eb"];
 
@@ -92,7 +92,7 @@ export default function MultiLineChart({
         color: PALETTE[index % PALETTE.length],
         hidden: false,
       })),
-    [dataset],
+    [dataset]
   );
 
   const [legend, setLegend] = useState(initialLegend);
@@ -101,14 +101,14 @@ export default function MultiLineChart({
   const handleToggle = (id: string) => {
     setLegend((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item,
-      ),
+        item.id === id ? { ...item, hidden: !item.hidden } : item
+      )
     );
   };
 
   const handleColor = (id: string, color: string) => {
     setLegend((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, color } : item)),
+      prev.map((item) => (item.id === id ? { ...item, color } : item))
     );
   };
 
