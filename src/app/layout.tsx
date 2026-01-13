@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/app/providers";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
@@ -30,7 +31,9 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <StyledComponentsRegistry>
-          <Providers>{children}</Providers>
+          <AntdRegistry>
+            <Providers>{children}</Providers>
+          </AntdRegistry>
         </StyledComponentsRegistry>
       </body>
     </html>
