@@ -24,6 +24,7 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "directional-auth",
       storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
     },
   ),
 );

@@ -1,7 +1,8 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthStore } from "@/features/auth/store";
 import GlobalStyle from "@/styles/GlobalStyle";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -16,6 +17,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         },
       }),
   );
+
+  useEffect(() => {
+    useAuthStore.persist.rehydrate();
+  }, []);
 
   return (
     <QueryClientProvider client={client}>
