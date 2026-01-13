@@ -1,6 +1,7 @@
 "use client";
 
 import { Col, Row, Segmented, Typography } from "antd";
+import { useState } from "react";
 import ChartCard from "@/components/ui/charts/ChartCard";
 import MultiLineChart from "@/components/ui/charts/MultiLineChart/MultiLineChart";
 import PieBarChart from "@/components/ui/charts/PieBarChart/PieBarChart";
@@ -13,7 +14,6 @@ import {
   useWeeklyMoodCharts,
   useWeeklyWorkoutCharts,
 } from "@/features/charts/queries";
-import { useState } from "react";
 
 const Loading = () => {
   return <Typography.Text>로딩 중...</Typography.Text>;

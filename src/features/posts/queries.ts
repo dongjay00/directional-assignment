@@ -12,11 +12,11 @@ import {
   updatePost,
 } from "@/apis/posts/api";
 import type {
-  PostInput,
-  PostDto,
   Post,
-  PostsResponseDto,
+  PostDto,
+  PostInput,
   PostsPage,
+  PostsResponseDto,
 } from "@/apis/posts/types";
 import { useAuthStore } from "@/features/auth/store";
 

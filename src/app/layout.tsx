@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/app/providers";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";

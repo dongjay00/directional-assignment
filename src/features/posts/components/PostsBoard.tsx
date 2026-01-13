@@ -1,6 +1,7 @@
 "use client";
 
 import { SettingOutlined } from "@ant-design/icons";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Badge,
   Button,
@@ -15,13 +16,13 @@ import {
   Tag,
   Typography,
 } from "antd";
-import { useQueryClient } from "@tanstack/react-query";
 import type { ColumnsType } from "antd/es/table";
 import { useMemo, useRef, useState } from "react";
 import { Resizable } from "react-resizable";
 import styled from "styled-components";
 import { createPost } from "@/apis/posts/api";
 import type { Post } from "@/apis/posts/types";
+import { useAuthStore } from "@/features/auth/store";
 import PostFormModal from "@/features/posts/components/PostFormModal";
 import {
   useCreatePostMutation,
@@ -31,7 +32,6 @@ import {
   useUpdatePostMutation,
 } from "@/features/posts/queries";
 import { createDummyPosts } from "@/features/posts/seedPosts";
-import { useAuthStore } from "@/features/auth/store";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { POST_CATEGORIES } from "@/lib/constants";
@@ -59,9 +59,9 @@ const ResizableTitle = (
     width?: number;
     onResize?: (
       e: React.SyntheticEvent,
-      data: { size: { width: number } }
+      data: { size: { width: number } },
     ) => void;
-  }
+  },
 ) => {
   const { onResize, width, ...restProps } = props;
   if (!width || !onResize) {
@@ -94,7 +94,7 @@ export default function PostsBoard() {
       tags: true,
       createdAt: true,
       actions: true,
-    }
+    },
   );
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
     title: 280,
@@ -120,7 +120,7 @@ export default function PostsBoard() {
 
   const posts = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
-    [data]
+    [data],
   );
 
   const createMutation = useCreatePostMutation();
@@ -243,7 +243,7 @@ export default function PostsBoard() {
       columnWidths.tags,
       columnWidths.title,
       deleteMutation,
-    ]
+    ],
   );
 
   const mergedColumns = columns

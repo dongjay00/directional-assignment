@@ -13,8 +13,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { PieBarDatum } from "./types";
 import LegendControls from "@/components/ui/charts/LegendControls";
+import type { PieBarDatum } from "./types";
 
 const PALETTE = [
   "#0f766e",
@@ -39,26 +39,26 @@ export default function PieBarChart({ data, variant }: PieBarChartProps) {
         color: PALETTE[index % PALETTE.length],
         hidden: false,
       })),
-    [data]
+    [data],
   );
 
   const [legend, setLegend] = useState(initialLegend);
 
   const visibleData = data.filter(
-    (item) => !legend.find((entry) => entry.id === item.id)?.hidden
+    (item) => !legend.find((entry) => entry.id === item.id)?.hidden,
   );
 
   const handleToggle = (id: string) => {
     setLegend((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item
-      )
+        item.id === id ? { ...item, hidden: !item.hidden } : item,
+      ),
     );
   };
 
   const handleColor = (id: string, color: string) => {
     setLegend((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, color } : item))
+      prev.map((item) => (item.id === id ? { ...item, color } : item)),
     );
   };
 
