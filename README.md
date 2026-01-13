@@ -2,6 +2,8 @@
 
 로그인 기반 게시판과 차트 대시보드를 구현한 Next.js 과제 프로젝트입니다.
 
+[배포 링크](https://directional-assignment-theta.vercel.app)
+
 ## 실행 방법
 
 ```bash
@@ -28,7 +30,7 @@ npm run start
 
 - Next.js 16 (App Router), React 19, TypeScript
 - Ant Design 6, styled-components
-- Tanstack React Query 5, Zustand
+- Tanstack Query 5, Zustand
 - Recharts
 - Biome (lint/format)
 
@@ -45,14 +47,14 @@ npm run start
   - 금칙어/길이/태그 개수 제한 등의 유효성 검사
 - 차트 대시보드
   - 막대/도넛, 막대/영역 전환 가능한 차트
-  - 멀티라인(이중 축) 차트와 커스텀 툴팁
+  - 멀티라인(이중 축) 차트와 커스텀 Tooltip
   - 범례 토글/색상 변경 UI 제공
 
 ## 설계 포인트
 
 - 기능 단위 분리: `features/auth`, `features/posts`, `features/charts`로 도메인 구성
 - API 계층화: `requestJson` 유틸로 공통 HTTP 처리 및 에러 핸들링
-- 데이터 가공 위치 통일: React Query의 `select`에서 서버 DTO를 화면 모델로 변환
+- 데이터 가공 위치 통일: Tanstack Query의 `select`에서 서버 DTO를 화면 모델로 변환
 - UI 일관성: Ant Design 컴포넌트 + styled-components를 병행, SSR 레지스트리 적용
 
 ## 폴더 구조
