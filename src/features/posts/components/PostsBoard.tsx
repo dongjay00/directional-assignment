@@ -82,7 +82,8 @@ const ResizableTitle = (
 
 export default function PostsBoard() {
   const [searchInput, setSearchInput] = useState("");
-  const search = useDebounce(searchInput.trim(), 300);
+  const debouncedSearchInput = useDebounce(searchInput, 300);
+  const search = debouncedSearchInput.trim();
   const [sort, setSort] = useState<"createdAt" | "title">("createdAt");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [category, setCategory] = useState<string>("all");
