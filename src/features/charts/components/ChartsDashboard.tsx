@@ -14,6 +14,22 @@ import {
   useWeeklyWorkoutCharts,
 } from "@/features/charts/queries";
 
+const Loading = () => {
+  return <Typography.Text>로딩 중...</Typography.Text>;
+};
+
+const RowLayout = ({ children }: { children: React.ReactNode }) => {
+  return <Row gutter={[16, 16]}>{children}</Row>;
+};
+
+const ColLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Col xs={24} lg={12}>
+      {children}
+    </Col>
+  );
+};
+
 export default function ChartsDashboard() {
   const coffeeBrands = useCoffeeBrandCharts();
   const snackBrands = useSnackBrandCharts();
@@ -31,47 +47,47 @@ export default function ChartsDashboard() {
         </Typography.Text>
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
+      <RowLayout>
+        <ColLayout>
           <ChartCard title="인기 커피 브랜드 - 막대">
             {coffeeBrands.data ? (
               <PieBarChart data={coffeeBrands.data} variant="bar" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="인기 커피 브랜드 - 도넛">
             {coffeeBrands.data ? (
               <PieBarChart data={coffeeBrands.data} variant="donut" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="인기 간식 브랜드 - 막대">
             {snackBrands.data ? (
               <PieBarChart data={snackBrands.data} variant="bar" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="인기 간식 브랜드 - 도넛">
             {snackBrands.data ? (
               <PieBarChart data={snackBrands.data} variant="donut" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-      </Row>
+        </ColLayout>
+      </RowLayout>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
+      <RowLayout>
+        <ColLayout>
           <ChartCard title="주간 무드 - 스택형 막대" description="백분율 기준">
             {weeklyMood.data ? (
               <StackedChart
@@ -81,11 +97,11 @@ export default function ChartsDashboard() {
                 labels={{ happy: "행복", tired: "피로", stressed: "스트레스" }}
               />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="주간 무드 - 스택형 면적" description="백분율 기준">
             {weeklyMood.data ? (
               <StackedChart
@@ -95,11 +111,11 @@ export default function ChartsDashboard() {
                 labels={{ happy: "행복", tired: "피로", stressed: "스트레스" }}
               />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="주간 운동 - 스택형 막대" description="백분율 기준">
             {weeklyWorkout.data ? (
               <StackedChart
@@ -113,11 +129,11 @@ export default function ChartsDashboard() {
                 }}
               />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="주간 운동 - 스택형 면적" description="백분율 기준">
             {weeklyWorkout.data ? (
               <StackedChart
@@ -131,32 +147,32 @@ export default function ChartsDashboard() {
                 }}
               />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-      </Row>
+        </ColLayout>
+      </RowLayout>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
+      <RowLayout>
+        <ColLayout>
           <ChartCard title="커피 소비 영향도">
             {coffeeConsumption.data ? (
               <MultiLineChart dataset={coffeeConsumption.data} xLabel="컵" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-        <Col xs={24} lg={12}>
+        </ColLayout>
+        <ColLayout>
           <ChartCard title="간식 영향도">
             {snackImpact.data ? (
               <MultiLineChart dataset={snackImpact.data} xLabel="간식" />
             ) : (
-              <Typography.Text>로딩 중...</Typography.Text>
+              <Loading />
             )}
           </ChartCard>
-        </Col>
-      </Row>
+        </ColLayout>
+      </RowLayout>
     </div>
   );
 }
