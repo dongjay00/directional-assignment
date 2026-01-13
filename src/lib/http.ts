@@ -23,7 +23,7 @@ export class HttpError extends Error {
 const buildQuery = (params?: RequestOptions<unknown>["params"]) => {
   if (!params) return "";
   const entries = Object.entries(params).filter(
-    ([, value]) => value !== undefined && value !== ""
+    ([, value]) => value !== undefined && value !== "",
   );
   if (entries.length === 0) return "";
   const searchParams = new URLSearchParams();
@@ -36,7 +36,7 @@ const buildQuery = (params?: RequestOptions<unknown>["params"]) => {
 
 export const requestJson = async <TResponse, TBody = unknown>(
   path: string,
-  options: RequestOptions<TBody> = {}
+  options: RequestOptions<TBody> = {},
 ): Promise<TResponse> => {
   const url = `${API_BASE_URL}${path}${buildQuery(options.params)}`;
   const response = await fetch(url, {

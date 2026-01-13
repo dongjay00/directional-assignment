@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Button, Typography } from "antd";
+import Link from "next/link";
 import styled from "styled-components";
 
 const Page = styled.main`

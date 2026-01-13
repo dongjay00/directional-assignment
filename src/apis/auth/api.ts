@@ -1,5 +1,5 @@
 import { requestJson } from "@/lib/http";
-import { LoginRequest, LoginResponseDto } from "./types";
+import type { LoginRequest, LoginResponseDto } from "./types";
 
 export const login = (payload: LoginRequest) =>
   requestJson<LoginResponseDto, LoginRequest>("/auth/login", {

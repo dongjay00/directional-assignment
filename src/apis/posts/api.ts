@@ -13,7 +13,7 @@ export type PostsQueryParams = {
 
 export const fetchPosts = (
   token: string,
-  params: PostsQueryParams
+  params: PostsQueryParams,
 ): Promise<PostsResponseDto> =>
   requestJson<PostsResponseDto>("/posts", {
     token,
@@ -30,7 +30,7 @@ export const createPost = (token: string, payload: PostInput) =>
 export const updatePost = (
   token: string,
   id: string,
-  payload: Partial<PostInput>
+  payload: Partial<PostInput>,
 ) =>
   requestJson(`/posts/${id}`, {
     token,

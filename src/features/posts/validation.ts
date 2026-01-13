@@ -1,5 +1,5 @@
-import { FORBIDDEN_WORDS } from "@/lib/constants";
 import type { PostInput } from "@/apis/posts/types";
+import { FORBIDDEN_WORDS } from "@/lib/constants";
 
 export type PostValidationError = {
   field: keyof PostInput | "tags" | "form";
@@ -9,7 +9,7 @@ export type PostValidationError = {
 export const validatePost = (payload: PostInput): PostValidationError[] => {
   const errors: PostValidationError[] = [];
   const forbidden = FORBIDDEN_WORDS.find((word) =>
-    [payload.title, payload.body].some((text) => text.includes(word))
+    [payload.title, payload.body].some((text) => text.includes(word)),
   );
 
   if (payload.title.trim().length === 0) {
@@ -32,7 +32,7 @@ export const validatePost = (payload: PostInput): PostValidationError[] => {
   if (invalidTag) {
     errors.push({
       field: "tags",
-      message: `태그 \"${invalidTag}\"는 24자를 넘을 수 없습니다.`,
+      message: `태그 "${invalidTag}"는 24자를 넘을 수 없습니다.`,
     });
   }
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import Providers from "@/app/providers";
+import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import "antd/dist/reset.css";
 import "./globals.css";
 

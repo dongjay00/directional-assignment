@@ -49,7 +49,7 @@ export default function StackedChart({
         color: PALETTE[index % PALETTE.length],
         hidden: false,
       })),
-    [keys, labels]
+    [keys, labels],
   );
 
   const [legend, setLegend] = useState(initialLegend);
@@ -60,14 +60,14 @@ export default function StackedChart({
   const handleToggle = (id: string) => {
     setLegend((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item
-      )
+        item.id === id ? { ...item, hidden: !item.hidden } : item,
+      ),
     );
   };
 
   const handleColor = (id: string, color: string) => {
     setLegend((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, color } : item))
+      prev.map((item) => (item.id === id ? { ...item, color } : item)),
     );
   };
 

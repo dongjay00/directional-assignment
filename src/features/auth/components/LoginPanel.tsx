@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { Alert, Button, Card, Form, Input, Typography } from "antd";
 import { useRouter } from "next/navigation";
-import { Button, Card, Form, Input, Alert, Typography } from "antd";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useLoginMutation } from "@/features/auth/queries";
 import { useAuthStore } from "@/features/auth/store";

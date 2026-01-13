@@ -3,6 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
+import type { PostsQueryParams } from "@/apis/posts/api";
 import {
   createPost,
   deleteAllPosts,
@@ -13,7 +14,6 @@ import {
 import type { PostInput } from "@/apis/posts/types";
 import { mapPostsPage } from "@/apis/posts/types";
 import { useAuthStore } from "@/features/auth/store";
-import type { PostsQueryParams } from "@/apis/posts/api";
 
 const postsKeys = {
   all: ["posts"] as const,

@@ -23,7 +23,7 @@ export const useInfiniteScroll = ({
           onIntersect();
         }
       },
-      { rootMargin }
+      { rootMargin },
     );
 
     observer.observe(element);

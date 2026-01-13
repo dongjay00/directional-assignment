@@ -14,7 +14,7 @@ import type {
 } from "@/apis/charts/types";
 
 const toPieBar = (
-  items: Array<{ label: string; value: number }>
+  items: Array<{ label: string; value: number }>,
 ): PieBarDatum[] =>
   items.map((item) => ({
     id: item.label,
@@ -22,8 +22,10 @@ const toPieBar = (
     value: item.value,
   }));
 
-const toPercentStack = <T extends Record<string, number | string> & { week: string }>(
-  data: T[]
+const toPercentStack = <
+  T extends Record<string, number | string> & { week: string },
+>(
+  data: T[],
 ): WeeklyStackDatum[] =>
   data.map((entry) => {
     const keys = Object.keys(entry).filter((key) => key !== "week");
@@ -79,7 +81,7 @@ export const useCoffeeBrandCharts = () =>
         data.map((item) => ({
           label: item.brand,
           value: item.popularity,
-        }))
+        })),
       ),
   });
 

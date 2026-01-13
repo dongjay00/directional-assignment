@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import AuthGuard from "@/components/AuthGuard";
 import TopNav from "@/components/TopNav";
-import styled from "styled-components";
 
 const Shell = styled.div`
   min-height: 100vh;

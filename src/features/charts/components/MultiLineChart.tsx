@@ -45,6 +45,7 @@ const DotShape = ({
   if (cx === undefined || cy === undefined) return null;
   const size = 8;
   return variant === "circle" ? (
+    // biome-ignore lint/a11y/useSemanticElements: SVG point handles hover tooltip.
     <circle
       cx={cx}
       cy={cy}
@@ -52,10 +53,15 @@ const DotShape = ({
       fill="#fff"
       stroke={stroke}
       strokeWidth={2}
+      role="button"
+      tabIndex={0}
+      onFocus={onEnter}
+      onBlur={onLeave}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     />
   ) : (
+    // biome-ignore lint/a11y/useSemanticElements: SVG point handles hover tooltip.
     <rect
       x={cx - size / 2}
       y={cy - size / 2}
@@ -64,6 +70,10 @@ const DotShape = ({
       fill="#fff"
       stroke={stroke}
       strokeWidth={2}
+      role="button"
+      tabIndex={0}
+      onFocus={onEnter}
+      onBlur={onLeave}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     />
@@ -82,7 +92,7 @@ export default function MultiLineChart({
         color: PALETTE[index % PALETTE.length],
         hidden: false,
       })),
-    [dataset]
+    [dataset],
   );
 
   const [legend, setLegend] = useState(initialLegend);
@@ -91,14 +101,14 @@ export default function MultiLineChart({
   const handleToggle = (id: string) => {
     setLegend((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item
-      )
+        item.id === id ? { ...item, hidden: !item.hidden } : item,
+      ),
     );
   };
 
   const handleColor = (id: string, color: string) => {
     setLegend((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, color } : item))
+      prev.map((item) => (item.id === id ? { ...item, color } : item)),
     );
   };
 

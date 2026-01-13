@@ -2,9 +2,9 @@
 
 import { Col, Row, Typography } from "antd";
 import ChartCard from "@/features/charts/components/ChartCard";
+import MultiLineChart from "@/features/charts/components/MultiLineChart";
 import PieBarChart from "@/features/charts/components/PieBarChart";
 import StackedChart from "@/features/charts/components/StackedChart";
-import MultiLineChart from "@/features/charts/components/MultiLineChart";
 import {
   useCoffeeBrandCharts,
   useCoffeeConsumptionChart,

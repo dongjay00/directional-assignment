@@ -31,10 +31,7 @@ export default function LegendControls({
             padding: "4px 10px",
           }}
         >
-          <Checkbox
-            checked={!item.hidden}
-            onChange={() => onToggle(item.id)}
-          />
+          <Checkbox checked={!item.hidden} onChange={() => onToggle(item.id)} />
           <Typography.Text>{item.label}</Typography.Text>
           <ColorPicker
             value={item.color}

@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import type { ColumnsType } from "antd/es/table";
+import { SettingOutlined } from "@ant-design/icons";
 import {
   Badge,
   Button,
@@ -14,13 +13,12 @@ import {
   Tag,
   Typography,
 } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
+import type { ColumnsType } from "antd/es/table";
+import { useMemo, useRef, useState } from "react";
 import { Resizable } from "react-resizable";
 import styled from "styled-components";
-import PostFormModal from "@/features/posts/components/PostFormModal";
-import { POST_CATEGORIES } from "@/lib/constants";
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { Post } from "@/apis/posts/types";
+import PostFormModal from "@/features/posts/components/PostFormModal";
 import {
   useCreatePostMutation,
   useDeleteAllPostsMutation,
@@ -28,6 +26,8 @@ import {
   useInfinitePosts,
   useUpdatePostMutation,
 } from "@/features/posts/queries";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { POST_CATEGORIES } from "@/lib/constants";
 
 const HeaderRow = styled.div`
   display: flex;
@@ -52,9 +52,9 @@ const ResizableTitle = (
     width?: number;
     onResize?: (
       e: React.SyntheticEvent,
-      data: { size: { width: number } }
+      data: { size: { width: number } },
     ) => void;
-  }
+  },
 ) => {
   const { onResize, width, ...restProps } = props;
   if (!width || !onResize) {
@@ -85,7 +85,7 @@ export default function PostsBoard() {
       tags: true,
       createdAt: true,
       actions: true,
-    }
+    },
   );
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
     title: 280,
@@ -108,7 +108,7 @@ export default function PostsBoard() {
 
   const posts = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
-    [data]
+    [data],
   );
 
   const createMutation = useCreatePostMutation();
@@ -205,7 +205,7 @@ export default function PostsBoard() {
       columnWidths.tags,
       columnWidths.title,
       deleteMutation,
-    ]
+    ],
   );
 
   const mergedColumns = columns

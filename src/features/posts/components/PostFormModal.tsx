@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import { Form, Input, Modal, Select, Typography } from "antd";
+import { useEffect } from "react";
 import styled from "styled-components";
 import type { Post, PostInput } from "@/apis/posts/types";
-import { POST_CATEGORIES } from "@/lib/constants";
 import { validatePost } from "@/features/posts/validation";
+import { POST_CATEGORIES } from "@/lib/constants";
 
 const ErrorText = styled(Typography.Text)`
   display: block;
