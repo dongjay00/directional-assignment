@@ -1,5 +1,5 @@
-import styled from "styled-components";
+import ChartsDashboard from "@/features/charts/components/ChartsDashboard";
 
 export default function ChartsPage() {
-  return <></>;
+  return <ChartsDashboard />;
 }

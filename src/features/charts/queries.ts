@@ -7,7 +7,11 @@ import {
   fetchWeeklyMood,
   fetchWeeklyWorkout,
 } from "@/apis/charts/api";
-import type { MultiLineDataset, PieBarDatum } from "@/apis/charts/types";
+import type {
+  MultiLineDataset,
+  PieBarDatum,
+  WeeklyStackDatum,
+} from "@/apis/charts/types";
 
 const toPieBar = (
   items: Array<{ label: string; value: number }>
@@ -18,13 +22,13 @@ const toPieBar = (
     value: item.value,
   }));
 
-const toPercentStack = (data: Array<Record<string, number | string>>) =>
+const toPercentStack = <T extends Record<string, number | string> & { week: string }>(
+  data: T[]
+): WeeklyStackDatum[] =>
   data.map((entry) => {
     const keys = Object.keys(entry).filter((key) => key !== "week");
     const total = keys.reduce((sum, key) => sum + Number(entry[key] ?? 0), 0);
-    const result: Record<string, number | string> = {
-      week: String(entry.week),
-    };
+    const result: WeeklyStackDatum = { week: entry.week };
     keys.forEach((key) => {
       const value = Number(entry[key] ?? 0);
       result[key] =
