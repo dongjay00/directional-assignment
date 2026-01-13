@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Layout, Menu, Space, Typography } from "antd";
+import { Button, Layout, Menu, Popconfirm, Space, Typography } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
@@ -49,7 +49,16 @@ export default function TopNav() {
       </Space>
       <Space size={16} align="center">
         <Typography.Text type="secondary">{user?.email}</Typography.Text>
-        {token ? <Button onClick={clearSession}>로그아웃</Button> : null}
+        {token ? (
+          <Popconfirm
+            title="로그아웃 할까요?"
+            okText="로그아웃"
+            cancelText="취소"
+            onConfirm={clearSession}
+          >
+            <Button>로그아웃</Button>
+          </Popconfirm>
+        ) : null}
       </Space>
     </Wrapper>
   );
