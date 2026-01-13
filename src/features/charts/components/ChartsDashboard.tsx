@@ -1,6 +1,6 @@
 "use client";
 
-import { Col, Row, Typography } from "antd";
+import { Col, Row, Segmented, Typography } from "antd";
 import ChartCard from "@/components/ui/charts/ChartCard";
 import MultiLineChart from "@/components/ui/charts/MultiLineChart/MultiLineChart";
 import PieBarChart from "@/components/ui/charts/PieBarChart/PieBarChart";
@@ -13,6 +13,7 @@ import {
   useWeeklyMoodCharts,
   useWeeklyWorkoutCharts,
 } from "@/features/charts/queries";
+import { useState } from "react";
 
 const Loading = () => {
   return <Typography.Text>로딩 중...</Typography.Text>;
@@ -31,6 +32,19 @@ const ColLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default function ChartsDashboard() {
+  const [coffeeBrandVariant, setCoffeeBrandVariant] = useState<"bar" | "donut">(
+    "bar",
+  );
+  const [snackBrandVariant, setSnackBrandVariant] = useState<"bar" | "donut">(
+    "bar",
+  );
+  const [weeklyMoodVariant, setWeeklyMoodVariant] = useState<"bar" | "area">(
+    "bar",
+  );
+  const [weeklyWorkoutVariant, setWeeklyWorkoutVariant] = useState<
+    "bar" | "area"
+  >("bar");
+
   const coffeeBrands = useCoffeeBrandCharts();
   const snackBrands = useSnackBrandCharts();
   const weeklyMood = useWeeklyMoodCharts();
@@ -49,36 +63,54 @@ export default function ChartsDashboard() {
 
       <RowLayout>
         <ColLayout>
-          <ChartCard title="인기 커피 브랜드 - 막대">
+          <ChartCard
+            title="인기 커피 브랜드"
+            extra={
+              <Segmented
+                size="small"
+                options={[
+                  { label: "막대", value: "bar" },
+                  { label: "도넛", value: "donut" },
+                ]}
+                value={coffeeBrandVariant}
+                onChange={(value) =>
+                  setCoffeeBrandVariant(value as "bar" | "donut")
+                }
+              />
+            }
+          >
             {coffeeBrands.data ? (
-              <PieBarChart data={coffeeBrands.data} variant="bar" />
+              <PieBarChart
+                data={coffeeBrands.data}
+                variant={coffeeBrandVariant}
+              />
             ) : (
               <Loading />
             )}
           </ChartCard>
         </ColLayout>
         <ColLayout>
-          <ChartCard title="인기 커피 브랜드 - 도넛">
-            {coffeeBrands.data ? (
-              <PieBarChart data={coffeeBrands.data} variant="donut" />
-            ) : (
-              <Loading />
-            )}
-          </ChartCard>
-        </ColLayout>
-        <ColLayout>
-          <ChartCard title="인기 간식 브랜드 - 막대">
+          <ChartCard
+            title="인기 간식 브랜드"
+            extra={
+              <Segmented
+                size="small"
+                options={[
+                  { label: "막대", value: "bar" },
+                  { label: "도넛", value: "donut" },
+                ]}
+                value={snackBrandVariant}
+                onChange={(value) =>
+                  setSnackBrandVariant(value as "bar" | "donut")
+                }
+              />
+            }
+          >
             {snackBrands.data ? (
-              <PieBarChart data={snackBrands.data} variant="bar" />
-            ) : (
-              <Loading />
-            )}
-          </ChartCard>
-        </ColLayout>
-        <ColLayout>
-          <ChartCard title="인기 간식 브랜드 - 도넛">
-            {snackBrands.data ? (
-              <PieBarChart data={snackBrands.data} variant="donut" />
+              <PieBarChart
+                data={snackBrands.data}
+                variant={snackBrandVariant}
+              />
             ) : (
               <Loading />
             )}
@@ -88,12 +120,28 @@ export default function ChartsDashboard() {
 
       <RowLayout>
         <ColLayout>
-          <ChartCard title="주간 무드 - 스택형 막대" description="백분율 기준">
+          <ChartCard
+            title="주간 무드"
+            description="백분율 기준"
+            extra={
+              <Segmented
+                size="small"
+                options={[
+                  { label: "막대", value: "bar" },
+                  { label: "면적", value: "area" },
+                ]}
+                value={weeklyMoodVariant}
+                onChange={(value) =>
+                  setWeeklyMoodVariant(value as "bar" | "area")
+                }
+              />
+            }
+          >
             {weeklyMood.data ? (
               <StackedChart
                 data={weeklyMood.data}
                 keys={["happy", "tired", "stressed"]}
-                variant="bar"
+                variant={weeklyMoodVariant}
                 labels={{ happy: "행복", tired: "피로", stressed: "스트레스" }}
               />
             ) : (
@@ -102,44 +150,28 @@ export default function ChartsDashboard() {
           </ChartCard>
         </ColLayout>
         <ColLayout>
-          <ChartCard title="주간 무드 - 스택형 면적" description="백분율 기준">
-            {weeklyMood.data ? (
-              <StackedChart
-                data={weeklyMood.data}
-                keys={["happy", "tired", "stressed"]}
-                variant="area"
-                labels={{ happy: "행복", tired: "피로", stressed: "스트레스" }}
+          <ChartCard
+            title="주간 운동"
+            description="백분율 기준"
+            extra={
+              <Segmented
+                size="small"
+                options={[
+                  { label: "막대", value: "bar" },
+                  { label: "면적", value: "area" },
+                ]}
+                value={weeklyWorkoutVariant}
+                onChange={(value) =>
+                  setWeeklyWorkoutVariant(value as "bar" | "area")
+                }
               />
-            ) : (
-              <Loading />
-            )}
-          </ChartCard>
-        </ColLayout>
-        <ColLayout>
-          <ChartCard title="주간 운동 - 스택형 막대" description="백분율 기준">
+            }
+          >
             {weeklyWorkout.data ? (
               <StackedChart
                 data={weeklyWorkout.data}
                 keys={["running", "cycling", "stretching"]}
-                variant="bar"
-                labels={{
-                  running: "러닝",
-                  cycling: "사이클",
-                  stretching: "스트레칭",
-                }}
-              />
-            ) : (
-              <Loading />
-            )}
-          </ChartCard>
-        </ColLayout>
-        <ColLayout>
-          <ChartCard title="주간 운동 - 스택형 면적" description="백분율 기준">
-            {weeklyWorkout.data ? (
-              <StackedChart
-                data={weeklyWorkout.data}
-                keys={["running", "cycling", "stretching"]}
-                variant="area"
+                variant={weeklyWorkoutVariant}
                 labels={{
                   running: "러닝",
                   cycling: "사이클",
